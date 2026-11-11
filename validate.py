@@ -7,9 +7,15 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+import dataclasses
+
 from backtest import run_backtest
 from config import DEFAULT_CONFIG
 from data import load_prices
+
+# The reference table is the 2026-06-05 snapshot of the live study, so validation
+# always runs against that pinned end date regardless of the deploy default.
+SNAPSHOT_END = "2026-06-05"
 
 HORIZONS = ["1W", "2W", "1M", "2M", "3M", "6M", "9M", "12M"]
 
@@ -33,7 +39,7 @@ def _fmt(x, ref, tol, unit=""):
 
 
 def main() -> None:
-    cfg = DEFAULT_CONFIG
+    cfg = dataclasses.replace(DEFAULT_CONFIG, dataset_end=SNAPSHOT_END)
     prices = load_prices(cfg)
     res = run_backtest(cfg, prices)
 

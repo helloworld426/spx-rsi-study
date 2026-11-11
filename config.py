@@ -38,10 +38,10 @@ class StudyConfig:
     # dataset for signals + baseline statistics.
     download_start: str = "1927-01-01"
     dataset_start: str = "1944-06-30"
-    # Pinned to the published study's snapshot date so the replication is
-    # deterministic no matter when the data is pulled. Set to None to run
-    # against the latest available bar instead.
-    dataset_end: str | None = "2026-06-05"
+    # None => run against the latest available bar (used for the live deployed
+    # dashboard). validate.py pins this to the original 2026-06-05 snapshot so
+    # the "matches the published study" proof stays reproducible forever.
+    dataset_end: str | None = None
 
     # --- indicator ---
     rsi_period: int = 14
